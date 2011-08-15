@@ -1,0 +1,16 @@
+name: LandMines
+main: me.Perdog.LandMines.LandMines
+version: 0.1
+commands:
+    landmines:
+        description: Displays help
+        usage: /landmines help
+    plant:
+        aliases: p
+        description: Plant a Landmine
+        usage: /plant
+    defuse:
+        aliases: d
+        description: Defuse an active Landmine
+        usage: /defuse
+     
