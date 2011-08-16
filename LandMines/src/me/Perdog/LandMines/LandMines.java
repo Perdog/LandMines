@@ -30,6 +30,7 @@ public class LandMines extends JavaPlugin {
 		log.info(name + " version: " + version + " by Perdog has been Enabled!");
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.PLAYER_ITEM_HELD, playerListener, Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
 		
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
