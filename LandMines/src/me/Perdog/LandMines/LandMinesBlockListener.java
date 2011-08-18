@@ -1,6 +1,7 @@
 package me.Perdog.LandMines;
 
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.block.BlockListener;
 
 public class LandMinesBlockListener extends BlockListener {
@@ -9,5 +10,4 @@ public class LandMinesBlockListener extends BlockListener {
 	}
 	@SuppressWarnings("unused")
 	private Block block;
-
 }

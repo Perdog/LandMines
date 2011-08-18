@@ -9,5 +9,14 @@ commands:
     plant:
         aliases: p
         description: Plant a Landmine
+        permission: Landmines.Plant
         usage: /plant
-     
+permissions:
+    Landmines.*:
+        description: Gives access to all commands
+        default: op
+        children:
+            Landmines.Plant: true
+    Landmines.Plant:
+        description: Gives access to the plant command.
+        default: true

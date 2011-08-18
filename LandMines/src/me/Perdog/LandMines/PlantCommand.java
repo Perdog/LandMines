@@ -12,11 +12,17 @@ public class PlantCommand implements CommandExecutor {
 	}
 	public boolean onCommand (CommandSender sender, Command cmd, String label, String[] args) {
 		player = (Player) sender;
-		if (cmd.getName().equalsIgnoreCase("plant")) {
-			player.sendMessage("You may now plant a land mine");
-			LandMines.Plant.add(player.getName());
-			return true;
+		if (player.hasPermission("Landmines.*") || (player.hasPermission("Landmines.Plant"))) {
+			if (cmd.getName().equalsIgnoreCase("plant") || (label.equalsIgnoreCase("p"))) {
+				player.sendMessage("You may now plant a land mine");
+				LandMines.Plant.add(player.getName());
+				return true;
 			}
-		return false;
 		}
+		else {
+			player.sendMessage("You do not have permission to do that!");
+			return true;
+		}
+		return false;
 	}
+}
