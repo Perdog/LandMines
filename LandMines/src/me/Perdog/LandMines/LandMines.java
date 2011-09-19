@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -36,7 +35,7 @@ public class LandMines extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
 		config = getConfiguration();
 		config.load();
-		Mat1 = config.getInt("Material required", Material.IRON_INGOT.getId());
+		Mat1 = config.getInt("Material required", 265);
 		Int1 = config.getInt("Amount required", 3);
 		config.save();
 	}
