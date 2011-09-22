@@ -21,7 +21,7 @@ public class LandMinesPlayerListener extends PlayerListener {
 		Action action = event.getAction();
 		ItemStack held = player.getItemInHand();
 		if (LandMines.plant.contains(player.getName())) {
-			if (action == Action.RIGHT_CLICK_BLOCK && held.getType() == Material.FLINT) {
+			if (action.equals(Action.RIGHT_CLICK_BLOCK) && held.getType().equals(Material.FLINT)) {
 				PlayerInventory inv = event.getPlayer().getInventory();
 				if (inv.contains(Mat1, Int1)) {
 					player.sendMessage("It worked!");
@@ -41,7 +41,7 @@ public class LandMinesPlayerListener extends PlayerListener {
 			}
 		}
 		if (player.hasPermission("Landmines.*") || player.hasPermission("Landmines.Defuse") || player.isOp()) {
-			if (action == Action.RIGHT_CLICK_BLOCK && held.getType() == Material.SHEARS) {
+			if (action.equals(Action.RIGHT_CLICK_BLOCK) && held.getType().equals(Material.SHEARS)) {
 				if (LandMines.mine.contains(event.getClickedBlock().getLocation())) {
 					BlockFace face = BlockFace.DOWN;
 					event.getClickedBlock().setType(event.getClickedBlock().getRelative(face).getType());
