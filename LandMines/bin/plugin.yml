@@ -20,6 +20,10 @@ permissions:
         default: op
         children:
             Landmines.Plant: true
+            LandMines.Defuse: true
     Landmines.Plant:
         description: Gives access to the plant command.
+        default: true
+    Landmines.Defuse:
+        description: Allows the player to defuse landmines.
         default: true

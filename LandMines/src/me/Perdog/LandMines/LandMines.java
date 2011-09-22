@@ -54,7 +54,7 @@ public class LandMines extends JavaPlugin {
 			}
 		}
 		if (cmd.getName().equalsIgnoreCase("plant")) {
-			if (player.hasPermission("Landmines.*") || (player.hasPermission("Landmines.Plant"))) {
+			if (player.hasPermission("Landmines.*") || (player.hasPermission("Landmines.Plant")) || (player.isOp())) {
 				player.sendMessage("You may now plant a land mine");
 				LandMines.plant.add(player.getName());
 				return true;
