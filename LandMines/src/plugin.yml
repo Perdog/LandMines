@@ -5,18 +5,18 @@ author: Perdog
 commands:
     landmines:
         aliases: lm
-        description: Displays help
+        description: Displays help.
         usage: |
             /landmines help
     plant:
         aliases: p
-        description: Plant a Landmine
+        description: Plant a Landmine.
         permission: Landmines.Plant
         usage: |
             /plant
 permissions: 
     Landmines.*:
-        description: Gives access to all commands
+        description: Gives access to all commands.
         default: op
         children:
             Landmines.Plant: true
