@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,12 +18,12 @@ import org.bukkit.util.config.Configuration;
 public class LandMines extends JavaPlugin {
 	public static ArrayList<String> plant = new ArrayList<String>();
 	public static ArrayList<Location> mine = new ArrayList<Location>();
-	public static ArrayList<Location> unbreakable = new ArrayList<Location>();
+	public static List<String> worlds;
 	public static ArrayList<String> author;
 	public static String name;
-	public static List<String> worlds;
 	public static int Mat1;
 	public static int Int1;
+	public static int Exp;
 	public static Set<Location> mines;
 	public Configuration config;
 	Logger log = Logger.getLogger("Minecraft");
@@ -40,8 +41,8 @@ public class LandMines extends JavaPlugin {
 		registerListeners();
 		config = getConfiguration();
 		config.load();
-		Mat1 = config.getInt("Material required", 265);
-		Int1 = config.getInt("Amount required", 3);
+		config.getInt("Material required", Mat1 = 265);
+		config.getInt("Amount required", Int1 = 3);
 		worlds = config.getStringList("Worlds", null);
 		config.setProperty("Worlds", worlds.toArray(new String[0]));
 		config.save();
@@ -50,8 +51,6 @@ public class LandMines extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		final LandMinesPlayerListener playerListener = new LandMinesPlayerListener (this);
 		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
-		final LandMinesBlockListener blockListener = new LandMinesBlockListener (this);
-		pm.registerEvent(Event.Type.BLOCK_BREAK, blockListener, Event.Priority.Normal, this);
 	}
 	public boolean onCommand (CommandSender sender, Command cmd, String label, String[] split) {
 		Player player = (Player) sender;
@@ -70,18 +69,18 @@ public class LandMines extends JavaPlugin {
 		if (cmd.getName().equalsIgnoreCase("plant")) {
 			if (player.hasPermission("Landmines.*") || (player.hasPermission("Landmines.Plant")) || (player.isOp())) {
 				if (worlds.contains(player.getWorld().getName()) || worlds.isEmpty()) {
-					player.sendMessage("You may now plant a land mine!");
+					player.sendMessage(ChatColor.GREEN + "You may now plant a land mine!");
 					LandMines.plant.add(player.getName());
 					return true;
 				}
 				else {
-					player.sendMessage("You cannot use LandMines in this world.");
-					player.sendMessage("You may use them in the following worlds only");
-					player.sendMessage("-" + LandMines.worlds);
+					player.sendMessage(ChatColor.RED + "You cannot use LandMines in this world.");
+					player.sendMessage(ChatColor.RED + "You may use them in the following worlds only");
+					player.sendMessage(ChatColor.GREEN + "-" + LandMines.worlds);
 				}
 			}
 			else {
-				player.sendMessage("You don't have permission to plant LandMines!");
+				player.sendMessage(ChatColor.RED + "You don't have permission to plant LandMines!");
 			}
 		}
 		return false;
