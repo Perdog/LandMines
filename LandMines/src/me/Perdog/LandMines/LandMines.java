@@ -11,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
@@ -51,6 +52,7 @@ public class LandMines extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		final LandMinesPlayerListener playerListener = new LandMinesPlayerListener (this);
 		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.PLAYER_MOVE, playerListener, Priority.Normal, this);
 	}
 	public boolean onCommand (CommandSender sender, Command cmd, String label, String[] split) {
 		Player player = (Player) sender;

@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -33,7 +34,7 @@ public class LandMinesPlayerListener extends PlayerListener {
 		ItemStack held = player.getItemInHand();
 		PlayerInventory inv = event.getPlayer().getInventory();
 		if (plant.contains(player.getName())) {
-			if (action.equals(Action.RIGHT_CLICK_BLOCK) && held.getType().equals(Material.FLINT)) {
+			if (action == Action.RIGHT_CLICK_BLOCK && held.getType() == Material.FLINT) {
 				if (worlds.contains(player.getWorld().getName()) || worlds.isEmpty()) {
 					if (inv.contains(Mat1, Int1)) {
 						player.playEffect(player.getLocation(), Effect.CLICK2, 200);
@@ -54,7 +55,7 @@ public class LandMinesPlayerListener extends PlayerListener {
 			}
 		}
 		if (player.hasPermission("Landmines.*") || player.hasPermission("Landmines.Defuse") || player.isOp()) {
-			if (action.equals(Action.RIGHT_CLICK_BLOCK) && held.getType().equals(Material.SHEARS)) {
+			if (action == Action.RIGHT_CLICK_BLOCK && held.getType() == Material.SHEARS) {
 				if (mine.contains(block.getLocation())) {
 					if (worlds.contains(player.getWorld().getName()) || worlds.isEmpty()) {
 						player.playEffect(player.getLocation(), Effect.CLICK1, 200);
@@ -64,12 +65,19 @@ public class LandMinesPlayerListener extends PlayerListener {
 				}
 			}
 		}
+	}
+	public void onPlayerMove (PlayerMoveEvent event) {
+		Player player = event.getPlayer();
+		ArrayList<Location> mine = LandMines.mine;
 		for (Location Mloc : mine) {
 			Location Ploc = player.getLocation();
-			if (Ploc.getX() == Mloc.getX() && Ploc.getZ() == Mloc.getZ() && Ploc.getY() >= Mloc.getY()) {
-				player.playEffect(player.getLocation(), Effect.DOOR_TOGGLE, 200);
-				player.sendMessage("*CLICK*");
+			if (Ploc.getBlockX() == Mloc.getX() && Ploc.getBlockZ() == Mloc.getZ() && Ploc.getBlockY() == Mloc.getY()+1) {
+				player.getLocation().getWorld().createExplosion(player.getLocation(), 10);
+				mine.remove(Mloc.getX());
+				mine.remove(Mloc.getZ());
+				mine.remove(Mloc.getY());
 			}
 		}
 	}
+
 }
