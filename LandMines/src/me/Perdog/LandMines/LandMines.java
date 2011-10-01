@@ -44,6 +44,7 @@ public class LandMines extends JavaPlugin {
 		config.load();
 		config.getInt("Material required", Mat1 = 265);
 		config.getInt("Amount required", Int1 = 3);
+		config.getInt("Experience earned for defusing mines", Exp = 5);
 		worlds = config.getStringList("Worlds", null);
 		config.setProperty("Worlds", worlds.toArray(new String[0]));
 		config.save();
@@ -62,7 +63,7 @@ public class LandMines extends JavaPlugin {
 		if (cmd.getName().equalsIgnoreCase("landmines") || (cmd.getName().equalsIgnoreCase("lm"))) {
 			if (split.length == 1) {
 				if (split[0].equalsIgnoreCase("help") || (split[0].equalsIgnoreCase("?"))) {
-					player.sendMessage("Try:");
+					player.sendMessage("To plant a Land Mine you need ");
 					player.sendMessage("/plant - plant a land mine");
 					return true;
 				}

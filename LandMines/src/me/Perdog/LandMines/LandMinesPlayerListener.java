@@ -26,6 +26,7 @@ public class LandMinesPlayerListener extends PlayerListener {
 		Player player = event.getPlayer();
 		int Mat1 = LandMines.Mat1;
 		int Int1 = LandMines.Int1;
+		int Exp = LandMines.Exp;
 		ArrayList<String> plant = LandMines.plant;
 		ArrayList<Location> mine = LandMines.mine;
 		List<String> worlds = LandMines.worlds;
@@ -37,11 +38,17 @@ public class LandMinesPlayerListener extends PlayerListener {
 			if (action == Action.RIGHT_CLICK_BLOCK && held.getType() == Material.FLINT) {
 				if (worlds.contains(player.getWorld().getName()) || worlds.isEmpty()) {
 					if (inv.contains(Mat1, Int1)) {
+						if (mine.contains(block.getLocation())) {
+							player.sendMessage("There is already a mine planted there.");
+						}
+						else {
+						held.setDurability((short) (held.getDurability() - 6));
 						player.playEffect(player.getLocation(), Effect.CLICK2, 200);
 						player.sendMessage(ChatColor.BLUE + "It worked!");
 						Bukkit.broadcastMessage(ChatColor.GREEN + "Watch out! " + ChatColor.GOLD + player.getName() + ChatColor.GREEN + " just planted a mine!");
 						plant.remove(player.getName());
 						mine.add(block.getLocation());
+						}
 					}
 					else {
 						player.sendMessage("You do not have enough " + ChatColor.LIGHT_PURPLE +  Mat1);
@@ -58,9 +65,16 @@ public class LandMinesPlayerListener extends PlayerListener {
 			if (action == Action.RIGHT_CLICK_BLOCK && held.getType() == Material.SHEARS) {
 				if (mine.contains(block.getLocation())) {
 					if (worlds.contains(player.getWorld().getName()) || worlds.isEmpty()) {
-						player.playEffect(player.getLocation(), Effect.CLICK1, 200);
-						player.sendMessage(ChatColor.GREEN + "You successfully defused the mine! Whew!");
-						mine.remove(block.getLocation());
+						if (held.getDurability() >= Material.SHEARS.getMaxDurability()) {
+							held.setAmount(held.getAmount()-held.getAmount());
+						}
+						else {
+							held.setDurability((short)(held.getDurability() + 10));
+							player.setExperience(player.getExperience() + Exp);
+							player.playEffect(player.getLocation(), Effect.CLICK1, 200);
+							player.sendMessage(ChatColor.GREEN + "You successfully defused the mine! Whew!");
+							mine.remove(block.getLocation());
+						}
 					}
 				}
 			}
@@ -72,10 +86,8 @@ public class LandMinesPlayerListener extends PlayerListener {
 		for (Location Mloc : mine) {
 			Location Ploc = player.getLocation();
 			if (Ploc.getBlockX() == Mloc.getX() && Ploc.getBlockZ() == Mloc.getZ() && Ploc.getBlockY() == Mloc.getY()+1) {
-				player.getLocation().getWorld().createExplosion(player.getLocation(), 10);
-				mine.remove(Mloc.getX());
-				mine.remove(Mloc.getZ());
-				mine.remove(Mloc.getY());
+				Mloc.getWorld().createExplosion(Ploc, 1);
+				mine.remove(Mloc);
 			}
 		}
 	}

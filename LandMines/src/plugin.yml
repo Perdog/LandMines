@@ -1,6 +1,6 @@
 name: LandMines
 main: me.Perdog.LandMines.LandMines
-version: 0.1
+version: 1.2
 author: Perdog
 commands:
     landmines:
