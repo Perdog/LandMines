@@ -25,6 +25,11 @@ public class LandMines extends JavaPlugin {
 	public static int Mat1;
 	public static int Int1;
 	public static int Exp;
+	public static int minemat;
+	public static int defmat;
+	public static int heldmat;
+	public static int Tnt;
+	public static int dur;
 	public static Set<Location> mines;
 	public Configuration config;
 	Logger log = Logger.getLogger("Minecraft");
@@ -42,9 +47,24 @@ public class LandMines extends JavaPlugin {
 		registerListeners();
 		config = getConfiguration();
 		config.load();
+		config.setHeader("How to setup Config",
+						"# Material required: Data value of the material that players need in their inventory (Default iron ignots)",
+						"# Amount required: How many of the above item they need",
+						"# Held material: Data value of the material in hand to plant mines (Default flint)",
+						"# Experience earned: How much experience the player gets for defusing a mine",
+						"# Mine material: Data value of what the block turns into when it becomes a mine (Default gravel)",
+						"# Defuse material: Data value of what the block turns into what it's defused (Default dirt)",
+						"# Explosion size: Size of explosion, 1=1 tnt, 7=7 tnt, ect. Recommend not setting too high, and 1 also leaves players alive if they have full health",
+						"# Shear durability: Durability to take from the shears when mines are defused",
+						"# Worlds: Worlds that mines are allowed to be used on, leave empty for all worlds");
 		config.getInt("Material required", Mat1 = 265);
 		config.getInt("Amount required", Int1 = 3);
-		config.getInt("Experience earned for defusing mines", Exp = 5);
+		config.getInt("Held material", heldmat = 318);
+		config.getInt("Experience earned", Exp = 5);
+		config.getInt("Mine material", minemat = 13);
+		config.getInt("Defuse material", defmat = 3);
+		config.getInt("Explosion size", Tnt = 1);
+		config.getInt("Shear durability", dur = 10);
 		worlds = config.getStringList("Worlds", null);
 		config.setProperty("Worlds", worlds.toArray(new String[0]));
 		config.save();
